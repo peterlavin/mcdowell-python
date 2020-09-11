@@ -5,8 +5,10 @@ Created on 16 Sep 2020
 '''
 import pytest
 
+
 def string_has_unique_chars(inp: str) -> bool:
-    
+    """ Determines unique chars by flagging a repeated
+    char """
     char_set = set()
     
     for ch in inp:
@@ -16,8 +18,10 @@ def string_has_unique_chars(inp: str) -> bool:
         
     return True
 
+
 def unique_by_sorting(inp: str) -> bool:
-    
+    """ Sorts the string and looks for two consecutive
+    characters """
     sorted_inp = sorted(inp)
     
     for i in range(len(sorted_inp)-1):
