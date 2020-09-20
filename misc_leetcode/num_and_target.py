@@ -94,39 +94,37 @@ nums = [876,879,155,291,431,296,592,965,502,173,869,504,258,342,
         404,473,258,953,318,898,555,390,727,510,783,427,806,92,33,474,858,
         851,783,12,752,356,942,307,235,397,915,502,939]
 
-target = 28
-print('Len of array:', len(nums))
+
+def one_pass_over_list(target: int, nums: []) -> []:
+    """ Assumes one unique solution exists """
+           
+    for i, num in enumerate(nums):
+        delta = target - num
+        if delta in nums:
+            match = nums.index(delta)
+            if match != i:
+                return sorted([i,match])
+
+
+def one_pass_using_dict(target: int, nums: []) -> []:
+    """ Assumes one unique solution exists """
+    # This dict will contain value:"index_in_list" pairs,
+    # This is the equivalent of a hash map, very fast/efficient
+    prev_vals = {}
+    for i, number in enumerate(nums):
+        # We're at any given i, and we can get the difference from the
+        # number at i and the target.
+        delta = target - number
+        # If this delta is not in the dict/hashmap, pop it in there
+        # with k:v being number:index
+        if delta not in prev_vals:
+            prev_vals[number] = i
+        else:
+            return sorted([prev_vals[delta],i])
+
 start_a = dt.now()
-
-result =[]
-        
-for i, num in enumerate(nums):
-    delta = target - num
-    if delta in nums:
-        match = nums.index(delta)
-        if match != i:
-            result = [i,match]
-
-print(nums[result[0]],nums[result[1]])
-
-print('a', sorted(result))
-
-print('Time taken - a:', (dt.now() - start_a).microseconds, 'ms')
-
+print(one_pass_over_list(28,nums))
 start_b = dt.now()
-
-# This dict will contain a value:index_of_value_in_list,
-# This is the equivalent of a hash map, very fast/efficient
-prev_vals = {}
-for i, number in enumerate(nums):
-    # We're at any given i, and we can get the difference from the
-    # number at i and the target.
-    delta = target - number
-    # If this delta is not in the dict/hashmap, pop it in there
-    # with k:v being number:index
-    if delta not in prev_vals:
-        prev_vals[number] = i
-    else:
-        print('b', sorted([prev_vals[delta],i]))
-
-print('Time taken - b:', (dt.now() - start_b).microseconds, 'ms')
+print(one_pass_using_dict(28,nums))
+print('List time:', (dt.now() - start_a).microseconds, 'ms')
+print('Dict time:', (dt.now() - start_b).microseconds, 'ms')
