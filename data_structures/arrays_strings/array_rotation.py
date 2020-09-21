@@ -7,8 +7,11 @@ import string
 from pprint import pprint as pp
 
 
+
 def rotate_array(image: []) -> []:
     """ Rotates an array in place, assumes the array will be square"""
+    global bigo
+    bigo = 0
     
     # depth here means how many layers in from the outside
     # until the middle is reached. If n is odd, the middle
@@ -21,6 +24,7 @@ def rotate_array(image: []) -> []:
         last = (len(image) - 1) - depth
         
         for i in range(depth, last):
+            bigo += 1
             # When moving around at a given depth, offset is how
             # far around we have come. It steps back 1 for each
             # lap at a given depth
@@ -48,16 +52,13 @@ def rotate_array(image: []) -> []:
     return image
 
 
-    
-    
-
 if __name__ == '__main__':
 
     letters = string.ascii_lowercase[:26]
    
     image = []
     count = 0
-    n = 5 
+    n = 8
     for j in range(0, n):
         image.append([])
         for k in range(0, n):
@@ -68,4 +69,4 @@ if __name__ == '__main__':
     rotate_array(image)
     print()
     pp(image)
- 
+    print('Big O count:', bigo)
