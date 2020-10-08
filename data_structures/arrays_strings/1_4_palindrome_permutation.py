@@ -6,6 +6,7 @@ Created on 3 Oct 2020
 
 import pytest
 from BitVector import BitVector
+import string
 
 
 def is_palindrome_perm_dict(phrase: str) -> bool:
@@ -35,48 +36,47 @@ def is_palindrome_perm_dict(phrase: str) -> bool:
     
     
 def is_palindrome_perm_bitvector(phrase: str) -> bool:
+    
+    ''' Uses a bitvector to trace the odd or eveness of
+    the frequency count for each char '''
 
     phrase = phrase.replace(' ', '').lower()
+    print(phrase)
     
-    # E.g. using intVal (integer value) of 8 would give 1000    
+    # E.g. using intVal (integer value) of 7 would give 00...111    
     bv = BitVector(intVal=0, size=26)
-    print(bv)
-
+    
     for char in phrase:
-        # Calculate the place in alphabet for the lc char
+        # Calculate the place in alphabet for the char,
+        # and flip/xor 1 the bit at that place
         ordinal = ord(char) - 96 - 1
         bv[ordinal] = bv[ordinal] ^ 1
-               
-    print(bv)
-    
-    # Subtract 1 from this bitvector
-    bv_minus_one = BitVector(intVal=int(bv)-1, size=26)
-    print(bv_minus_one)
-    print(bv & bv_minus_one)
-    print(bv ^ bv_minus_one)
-    
-    # Some bitvector Fu
+       
+    ''' Some binary number Fu... if there is only one bit set to 1, then
+    the value of 'that vector minus 1' when ANDed (&) with the original
+    vector will be 0. 
+    E.g. 01000 - 00001 = 00111, so 01000 & 00111 = 00000''' 
+    # max(..) is needed as the entire vector may be all zeros
+    bv_minus_one = BitVector(intVal=max(int(bv) - 1, 0), size=26)
+        
     return int(bv & bv_minus_one) == 0
-    
-
-print(is_palindrome_perm_bitvector("abcdefghijklm"))
     
     
 class TestPalindromePerms():
     ''' Tests for is_permutation_palindrome '''
     
     data = [('a b c c b a', True),
+           ('', True),  # Testing where the bitvector is all zeros
            ('aaaaa', True),
            ('BBBaaa', False),
-           ('Na vanxnavan', True)]
+           ('Na vanxnavan', True),  # spaces, x in the middle, uppercase
+           ('gkifhurybdcdehijj', False),  # semi-random string
+           ('tattarrattat', True)]  # longest palindrome in Ulysses (James Joyce)
         
-    def test_known_true(self):
-        assert is_palindrome_perm_dict("tattarrattat") == True
-        
-    def test_known_false(self):
-        assert is_palindrome_perm_dict("qwertyuiopp") == False
-
-    @pytest.mark.parametrize('string, expected', data)
-    def test_multiple(self, string, expected):
-        assert is_palindrome_perm_dict(string) == expected
-     
+    @pytest.mark.parametrize('s1, expected', data)
+    def test_dictionary_soln(self, s1, expected):
+        assert is_palindrome_perm_dict(s1) == expected
+    
+    @pytest.mark.parametrize('s1, expected', data)
+    def test_bitvector_soln(self, s1, expected):
+        assert is_palindrome_perm_bitvector(s1) == expected
