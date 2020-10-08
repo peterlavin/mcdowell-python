@@ -53,9 +53,9 @@ def is_palindrome_perm_bitvector(phrase: str) -> bool:
         bv[ordinal] = bv[ordinal] ^ 1
        
     ''' Some binary number Fu... if there is only one bit set to 1, then
-    the value of 'that vector minus 1' when ANDed (&) with the original
-    vector will be 0. 
-    E.g. 01000 - 00001 = 00111, so 01000 & 00111 = 00000''' 
+    the value of that vector when ANDed (&) with that vector minus 1 will be 0. 
+    E.g. 01000 - 00001 = 00111;  01000 & 00111 = 00000''' 
+    
     # max(..) is needed as the entire vector may be all zeros
     bv_minus_one = BitVector(intVal=max(int(bv) - 1, 0), size=26)
         
