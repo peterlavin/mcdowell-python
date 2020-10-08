@@ -3,45 +3,55 @@ Created on 3 Oct 2020
 
 @author: peter
 '''
-from ansible.modules.identity import _onepassword_facts
+
+import pytest
+
 
 def is_permutation_palindrome(phrase: str) -> bool:
     
-    phrase = phrase.lower()
-    
-    
-   
-    # Create a dict for count,
+    ''' Determines if a string is a perumtation of a palindrome
+    by checking that, at most, only one char has an odd frequency
+    Even length-strings must have all even frequencies, odd-length 
+    strings can have at most one odd frequency, with this char being
+    in the middle of the string '''
+ 
+    # Remove whitespaces and make lowercase   
+    phrase = phrase.replace(' ', '').lower()
+        
     counts = {}
     
-    # itr over the phrase, each time a char is found,
-    # if not already there, set to 1, if already there XOR with 1 (to flip it)
     for char in phrase:
+        # Python pattern to avoid KeyError when a key
+        # does not previously exist in a dict
         counts.setdefault(char, 0)
-        #counts[char] += 1
-        counts[char] = counts[char]^1
+        # XOR or flip the previous value, we don't care
+        # about the frequency, just if it is odd/even
+        counts[char] = counts[char] ^ 1
         
     print(counts)
+    
+    ones_zeros = list(counts.values())
+    print(ones_zeros)
+    
+    return ones_zeros.count(1) <= 1
+    
+    
+class TestPalindromePerms():
+    ''' Tests for is_permutation_palindrome '''
         
-    print(list(counts.values()))
-    
-    limit_of_one = False
-    
-    for num in list(counts.values()):
-        if num % 2 != 0 and limit_of_one:
-            return False
-        else:
-            limit_of_one = True
-    
-    return True
+    def test_known_true(self):
+        assert is_permutation_palindrome("tattarrattat") == True
+        
+    def test_known_false(self):
+        assert is_permutation_palindrome("qwertyuiopp") == False
+        
+    data = [('a b c c b a', True),
+            ('aaaaa', True),
+            ('BBBaaa', False),
+            ('Na vanxnavan', True), ]
 
-
-
-if __name__ == '__main__':
+    @pytest.mark.parametrize('string, expected', data)
+    def test_multiple(self, string, expected):
+        assert is_permutation_palindrome(string) == expected
     
-    print(is_permutation_palindrome("navanxnavan"))
-    
-    print(is_permutation_palindrome("tattarrattat"))
-    
-    
-    pass
+     
