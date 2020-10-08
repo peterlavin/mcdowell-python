@@ -48,7 +48,7 @@ class TestPalindromePerms():
     data = [('a b c c b a', True),
             ('aaaaa', True),
             ('BBBaaa', False),
-            ('Na vanxnavan', True), ]
+            ('Na vanxnavan', True)]
 
     @pytest.mark.parametrize('string, expected', data)
     def test_multiple(self, string, expected):
