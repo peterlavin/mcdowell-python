@@ -64,12 +64,14 @@ def one_edit_combined(str_one: str, str_two: str) -> bool:
     if abs(len(str_one) - len(str_two)) > 1:
         return False
     
-    ''' Get the shortest string, if equal length, it does not matter '''
-    short = min([str_one, str_two], key=len)
-    # TODO
-    # if strings are equal, either may be returned, so we need to be 
-    # sure that we are comparing both strings, not s1 and s1
+    ''' Get the shortest string, if equal length, it does not matter '''    
+    if len(str_one) == len(str_two):
+        long, short = str_one, str_two
+    else:
+        short = min([str_one, str_two], key=len)
+        long = max([str_one, str_two], key=len)
     
+    print(long,short)
     
     return True
 
