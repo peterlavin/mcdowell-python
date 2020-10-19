@@ -4,9 +4,8 @@ Created on 3 Oct 2020
 @author: peter
 '''
 
-import pytest
+import pytest, random
 from BitVector import BitVector
-import string
 
 
 def is_palindrome_perm_dict(phrase: str) -> bool:
@@ -58,9 +57,16 @@ def is_palindrome_perm_bitvector(phrase: str) -> bool:
     
     # max(..) is needed as the entire vector may be all zeros
     bv_minus_one = BitVector(intVal=max(int(bv) - 1, 0), size=26)
-        
-    return int(bv & bv_minus_one) == 0
     
+    ''' Or you could just use the built-in count_bits() method, but where's 
+    the fun that. Either random selection should always pass the tests here '''
+    
+    ''' For readability, define two booleans for random selection '''
+    one_or_zero = bv.count_bits() in (0,1)
+    bv_and_minus_one = int(bv & bv_minus_one) == 0
+   
+    return random.choice([one_or_zero, bv_and_minus_one]) 
+
     
 class TestPalindromePerms():
     ''' Tests for is_permutation_palindrome '''
