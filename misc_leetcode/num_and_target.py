@@ -79,8 +79,13 @@ def one_pass_using_dict(target: int, nums: []) -> []:
             return sorted([prev_vals[delta],i])
 
 start_a = dt.now()
-print(one_pass_over_list(28,nums))
+
+''' For some numbers, using a dict vs list give different positions, e.g. try 21 '''
+target_num = 28
+res_1 = one_pass_over_list(target_num, nums)
+print(f'Positions and numbers: {nums[res_1[0]]}, {nums[res_1[1]]}, ({nums[res_1[0]]+nums[res_1[1]]}), {res_1}')
 start_b = dt.now()
-print(one_pass_using_dict(28,nums))
+res_2 = one_pass_using_dict(target_num, nums)
+print(f'Positions and numbers: {nums[res_2[0]]}, {nums[res_2[1]]}, ({nums[res_2[0]]+nums[res_2[1]]}), {res_2}')
 print('List time:', (dt.now() - start_a).microseconds, 'ms')
 print('Dict time:', (dt.now() - start_b).microseconds, 'ms')
