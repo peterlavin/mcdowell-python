@@ -1,5 +1,6 @@
 
 from datetime import datetime as dt
+import random
 
 nums = [876,879,155,291,431,296,592,965,502,173,869,504,258,342,192,478,270,341,811,794,472,625,229,829,122,858,738,481,
         102,946,305,399,216,752,413,352,271,193,534,508,152,989,154,456,168,510,391,28,317,409,609,532,784,160,696,105,
@@ -81,7 +82,11 @@ def one_pass_using_dict(target: int, nums: []) -> []:
 start_a = dt.now()
 
 ''' For some numbers, using a dict vs list give different positions, e.g. try 21 '''
-target_num = 28
+target_num = 21
+
+''' With random shuffling of the list, dict is consistently faster '''
+random.shuffle(nums)
+
 res_1 = one_pass_over_list(target_num, nums)
 print(f'Positions and numbers: {nums[res_1[0]]}, {nums[res_1[1]]}, ({nums[res_1[0]]+nums[res_1[1]]}), {res_1}')
 start_b = dt.now()
