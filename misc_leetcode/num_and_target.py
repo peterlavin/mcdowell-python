@@ -92,5 +92,6 @@ print(f'Positions and numbers: {nums[res_1[0]]}, {nums[res_1[1]]}, ({nums[res_1[
 start_b = dt.now()
 res_2 = one_pass_using_dict(target_num, nums)
 print(f'Positions and numbers: {nums[res_2[0]]}, {nums[res_2[1]]}, ({nums[res_2[0]]+nums[res_2[1]]}), {res_2}')
-print('List time:', (dt.now() - start_a).microseconds, 'ms')
-print('Dict time:', (dt.now() - start_b).microseconds, 'ms')
+print(f'List time: {(dt.now() - start_a).microseconds} ms')
+print(f'Dict time: {(dt.now() - start_b).microseconds} ms')
+print(f'Ratio: {(dt.now() - start_a).microseconds / (dt.now() - start_b).microseconds:.1f}')
