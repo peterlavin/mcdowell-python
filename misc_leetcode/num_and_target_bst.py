@@ -4,6 +4,8 @@ Created on 30 Oct 2020
 @author: peter
 '''
 
+from datetime import datetime as dt
+
 nums = [876, 879, 155, 291, 431, 296, 592, 965, 502, 173, 869, 504, 258, 342, 192, 478, 270, 341, 811, 794, 472, 625, 229, 829, 122, 858, 738, 481,
         102, 946, 305, 399, 216, 752, 413, 352, 271, 193, 534, 508, 152, 989, 154, 456, 168, 510, 391, 28, 317, 409, 609, 532, 784, 160, 696, 105,
         245, 231, 20, 17, 81, 781, 79, 816, 918, 838, 123, 602, 338, 997, 192, 947, 388, 515, 510, 441, 175, 539, 708, 980, 207, 336, 524, 610, 3,
@@ -61,13 +63,16 @@ def search_using_bst(target: int, nums: []) -> []:
         
         delta = target - number
         
-        j = binary_search(delta, i)
+        ''' Pass i+1 to avoid returning the same number if the target is
+        exactly half the value at nums[i] '''
+        j = binary_search(delta, i+1)
         
         if j != -1:
             return [i, j]
 
         
 def binary_search(current_targ: int, start: int) -> int:
+    ''' return the index of the current_targ or -1 '''
     
     left = start
     right = len(nums) - 1
@@ -79,6 +84,7 @@ def binary_search(current_targ: int, start: int) -> int:
         else:
             right = middle
     
+    ''' Sanity check on left == right and valid output '''
     if left == right and nums[left] == current_targ:
         return left
     else:
@@ -88,6 +94,10 @@ def binary_search(current_targ: int, start: int) -> int:
 if __name__ == '__main__':
     
     nums.sort()
-    ans = search_using_bst(28, nums)
+    start = dt.now()
+    ans = search_using_bst(1100, nums)
+    print(f'BST time: {(dt.now() - start).microseconds} ms')
+    
+    print(ans)
     print(nums[ans[0]], nums[ans[1]])
 
