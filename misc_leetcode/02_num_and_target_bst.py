@@ -5,6 +5,7 @@ Created on 30 Oct 2020
 '''
 
 from datetime import datetime as dt
+from itertools import permutations
 
 nums = [876, 879, 155, 291, 431, 296, 592, 965, 502, 173, 869, 504, 258, 342, 192, 478, 270, 341, 811, 794, 472, 625, 229, 829, 122, 858, 738, 481,
         102, 946, 305, 399, 216, 752, 413, 352, 271, 193, 534, 508, 152, 989, 154, 456, 168, 510, 391, 28, 317, 409, 609, 532, 784, 160, 696, 105,
@@ -91,13 +92,40 @@ def binary_search(current_targ: int, start: int) -> int:
         return -1
         
 
+def pointers_only(target: int, nums: []) -> []:
+    ''' This is a much better optimisation as the target is in
+    the array all along, there is on need to search for it using
+    a calculated delta each time '''
+    
+    i = 0
+    j = len(nums) - 1
+    
+    while i < j:
+        try_this = nums[i] + nums[j]
+        if try_this > target:
+            j -= 1
+        elif try_this < target:
+            i += 1
+        elif try_this == target:
+            return [i,j]
+        
+        
+            
+
 if __name__ == '__main__':
     
     nums.sort()
     start = dt.now()
-    ans = search_using_bst(1100, nums)
+    ans_bst = search_using_bst(1999, nums)
     print(f'BST time: {(dt.now() - start).microseconds} ms')
     
-    print(ans)
-    print(nums[ans[0]], nums[ans[1]])
+    print(ans_bst)
+    print(nums[ans_bst[0]], nums[ans_bst[1]])
+    
+    start = dt.now()
+        
+    ans_2p = pointers_only(1999,nums)
+    print(ans_bst)
+    print(nums[ans_2p[0]], nums[ans_2p[1]])
+    print(f'Pointers time: {(dt.now() - start).microseconds} ms')
 
