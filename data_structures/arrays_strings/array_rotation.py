@@ -19,7 +19,7 @@ def rotate_array(image: []) -> []:
     # of the length or an array side
     for depth in range(0, int(len(image) / 2)):
 
-        # last is the hightest index in a given row,
+        # last is the highest index in a given row,
         # it decreases as depth increases
         last = (len(image) - 1) - depth
         

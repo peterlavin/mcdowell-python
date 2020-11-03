@@ -4,8 +4,8 @@ Created on 18 Sep 2020
 @author: peter
 
 Points to look out for...
- * Case sensivity
- * Whitespace sensivity
+ * Case sensitivity
+ * Whitespace sensitivity
  
  ** All approaches assume all chars are lower case **
 '''
@@ -17,7 +17,7 @@ def is_permutation(s1: str, s2: str) -> bool:
     s1 = s1.replace(' ', '')
     s2 = s2.replace(' ', '')
     
-    """ For starters, if strings are unequal lenght, they cannot
+    """ For starters, if strings are unequal length, they cannot
     be an anagram """
     if len(s1) != len(s2):
         return False
